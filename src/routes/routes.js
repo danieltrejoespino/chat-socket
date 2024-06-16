@@ -14,4 +14,6 @@ router.get('/', (req, res) => {
 
 router.post('/login', checkReq.login, loginAct.validateLogin );
 
+router.post('/menu', checkReq.menu, loginAct.getMenu );
+
 module.exports = router;

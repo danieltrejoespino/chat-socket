@@ -11,7 +11,7 @@ const myslqAccions = {
   },
   insertMessage: async (data) => {
     try {
-      const [result] = await dbMysql.execute(`INSERT INTO tbl_msg_general (idUserChat,msg) VALUES (${data.user},'${data.msg}')`)
+      const [result] = await dbMysql.execute(`INSERT INTO TBL_MSG (ID_USER,MSG) VALUES (${data.user},'${data.msg}')`)
       return result.affectedRows;
     } catch (error) {
       throw new Error('Database error: ' + error.message);
@@ -19,7 +19,16 @@ const myslqAccions = {
   },
   validateLogin: async (name,pass) => {
     try {
-      const [rows] = await dbMysql.execute(`SELECT * FROM tbl_user WHERE nameUser='${name}' AND passUser='${pass}'`)
+      const [rows] = await dbMysql.execute(`SELECT * FROM TBL_USER WHERE UPPER(NAME_USER)='${name}' AND PASS_USER='${pass}' AND STATUS_USER=1`)
+      return rows
+
+    } catch (error) {
+      console.log(error);
+    }
+  },
+  getMenu: async (id_user,id_perfil) => {
+    try {
+      const [rows] = await dbMysql.execute(`SELECT * FROM TBL_MENU`)
       return rows
 
     } catch (error) {
