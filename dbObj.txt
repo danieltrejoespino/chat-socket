@@ -1,0 +1,11 @@
+CREATE TABLE `u466684088_imp_internal`.`tbl_msg_general` (`idMsg` INT NOT NULL AUTO_INCREMENT , `idUserChat` INT NOT NULL , `msg` VARCHAR(1000) NOT NULL , `msgDate` DATE NOT NULL , PRIMARY KEY (`idMsg`)) ENGINE = InnoDB;
+
+
+CREATE TABLE `u466684088_imp_internal`.`tbl_user` (`idUser` INT NOT NULL AUTO_INCREMENT , `id_perfil` INT NOT NULL , `nameUser` VARCHAR(200) NOT NULL , `passUser` VARCHAR(200) NOT NULL , `enabled` INT NOT NULL , PRIMARY KEY (`idUser`)) ENGINE = InnoDB;
+
+
+
+
+
+Falta agregar validacion por token 
+del lado del cliente y del servidor
