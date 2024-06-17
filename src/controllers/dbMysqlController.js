@@ -34,6 +34,15 @@ const myslqAccions = {
     } catch (error) {
       console.log(error);
     }
+  },
+  getExt: async () => {
+    try {
+      const [rows] = await dbMysql.execute(`SELECT * FROM TBL_PHONE_EXT WHERE STATUS_EXT=1 `)
+      return rows
+
+    } catch (error) {
+      console.log(error);
+    }
   }
 
 
