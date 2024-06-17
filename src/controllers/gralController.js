@@ -42,6 +42,20 @@ const generalAccions = {
     } catch (error) {
       console.log(error);
     }
+  },
+  addPhoneExt : async (req,res) => {
+    const {owner, area, ext} = req.body
+    try {
+      const log= await myslqAccions.addExt(owner, area, ext)
+      
+      if(log == 1){
+        res.status(200).json({ rspta: 'success' })
+      }else {
+        res.status(404).json({ rspta: 'error' })
+      }
+    } catch (error) {
+      console.log(error);
+    }
   }
 }
 

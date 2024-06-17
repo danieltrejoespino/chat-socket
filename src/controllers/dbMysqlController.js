@@ -43,6 +43,15 @@ const myslqAccions = {
     } catch (error) {
       console.log(error);
     }
+  },
+  addExt: async (owner, area, ext) => {
+    try {
+      const [result] = await dbMysql.execute(`INSERT INTO TBL_PHONE_EXT (OWNER_EXT, AREA_EXT, NAME_EXT, STATUS_EXT) VALUES ('${owner}','${area}','${ext}',1 )`)
+      return result.affectedRows;
+
+    } catch (error) {
+      console.log(error);
+    }
   }
 
 

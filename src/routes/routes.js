@@ -20,6 +20,7 @@ router.post('/login', checkReq.login, loginAct.validateLogin );
 
 router.post('/getMenu', checkReq.menu, generalAccions.getMenu );
 
-router.post('/getPhoneExtensions', generalAccions.getPhoneExt );
+router.get('/getPhoneExtensions', generalAccions.getPhoneExt );
+router.post('/addPhoneExt', generalAccions.addPhoneExt );
 
 module.exports = router;
