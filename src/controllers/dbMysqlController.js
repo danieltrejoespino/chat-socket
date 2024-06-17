@@ -1,4 +1,8 @@
 const dbMysql = require('../config/mysqlConfig')
+const encodeBase64Node = (input) => Buffer.from(input, 'utf8').toString('base64');
+const decodeBase64Node = (input) => Buffer.from(input, 'base64').toString('utf8');
+
+
 
 const myslqAccions = {
   testConn: async () => {
@@ -10,8 +14,10 @@ const myslqAccions = {
     }
   },
   insertMessage: async (data) => {
+
+
     try {
-      const [result] = await dbMysql.execute(`INSERT INTO TBL_MSG (ID_USER,MSG) VALUES (${data.user},'${data.msg}')`)
+      const [result] = await dbMysql.execute(`INSERT INTO TBL_MSG (ID_USER,MSG) VALUES (${data.user},'${encodeBase64Node(data.msg)}')`)
       return result.affectedRows;
     } catch (error) {
       throw new Error('Database error: ' + error.message);
@@ -19,7 +25,7 @@ const myslqAccions = {
   },
   validateLogin: async (name,pass) => {
     try {
-      const [rows] = await dbMysql.execute(`SELECT * FROM TBL_USER WHERE UPPER(NAME_USER)='${name}' AND PASS_USER='${pass}' AND STATUS_USER=1`)
+      const [rows] = await dbMysql.execute(`SELECT * FROM TBL_USER WHERE NAME_USER='${name}' AND PASS_USER='${pass}' AND STATUS_USER=1`)
       return rows
 
     } catch (error) {
