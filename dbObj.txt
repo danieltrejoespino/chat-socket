@@ -39,14 +39,7 @@ CREATE TABLE TBL_PHONE_EXT (
 
 
 
-
-
-
-//!Falta agregar validacion por token 
-del lado del cliente y del servidor
-
-
-
+ 
 
 
  https://developer.visa.com/capabilities/visa-bin-attribute-sharing-service/reference#tag/Full-BIN-List/operation/Bin%20Range%20Details%20Using%20POST%20V2_v2%20-%20Latest

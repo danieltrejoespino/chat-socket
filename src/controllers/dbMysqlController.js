@@ -14,15 +14,26 @@ const myslqAccions = {
     }
   },
   insertMessage: async (data) => {
-
-
     try {
-      const [result] = await dbMysql.execute(`INSERT INTO TBL_MSG (ID_USER,MSG) VALUES (${data.user},'${encodeBase64Node(data.msg)}')`)
+      const [result] = await dbMysql.execute(`INSERT INTO TBL_MSG (ID_USER,MSG) VALUES (${data.user},'${data.msg}')`)
       return result.affectedRows;
     } catch (error) {
       throw new Error('Database error: ' + error.message);
     }
   },
+  getMessage: async () => {
+    try {
+      const [rows]  = await dbMysql.execute(`   
+        SELECT tu.NAME_USER,m.MSG,m.DATE_MSG 
+        from imp_internal.TBL_MSG m
+        left join imp_internal.TBL_USER tu on m.ID_USER = tu.ID_USER
+        where DATE(m.DATE_MSG) = CURDATE()
+        `)
+      return rows
+    } catch (error) {
+      throw new Error('Database error: ' + error.message);
+    }
+  },  
   validateLogin: async (name,pass) => {
     try {
       const [rows] = await dbMysql.execute(`SELECT * FROM TBL_USER WHERE NAME_USER='${name}' AND PASS_USER='${pass}' AND STATUS_USER=1`)
