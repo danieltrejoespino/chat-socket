@@ -22,6 +22,7 @@ const loginAct = {
         ID_PERFIL:  log[0].ID_PERFIL,
         NAME_USER: log[0].NAME_USER,        
         STATUS_USER: log[0].STATUS_USER,
+        APODO: log[0].APODO,
         TOKEN: token,
       }
       console.log(rspta);
