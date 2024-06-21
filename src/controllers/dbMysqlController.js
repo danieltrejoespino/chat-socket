@@ -25,8 +25,8 @@ const myslqAccions = {
     try {
       const [rows]  = await dbMysql.execute(`   
         SELECT tu.NAME_USER,m.MSG,m.DATE_MSG 
-        from imp_internal.TBL_MSG m
-        left join imp_internal.TBL_USER tu on m.ID_USER = tu.ID_USER
+        from TBL_MSG m
+        left join TBL_USER tu on m.ID_USER = tu.ID_USER
         where DATE(m.DATE_MSG) = CURDATE()
         `)
       return rows
@@ -38,6 +38,15 @@ const myslqAccions = {
     try {
       const [rows] = await dbMysql.execute(`SELECT * FROM TBL_USER WHERE NAME_USER='${name}' AND PASS_USER='${pass}' AND STATUS_USER=1`)
       return rows
+
+    } catch (error) {
+      console.log(error);
+    }
+  },
+  resetLogin: async (name,pass) => {
+    try {
+      const [result] = await dbMysql.execute(`UPDATE TBL_USER SET PASS_USER='${pass}' WHERE ID_USER=1 and NAME_USER = '${name}' `)
+      return result.affectedRows;
 
     } catch (error) {
       console.log(error);
@@ -64,6 +73,15 @@ const myslqAccions = {
   addExt: async (owner, area, ext) => {
     try {
       const [result] = await dbMysql.execute(`INSERT INTO TBL_PHONE_EXT (OWNER_EXT, AREA_EXT, NAME_EXT, STATUS_EXT) VALUES ('${owner}','${area}','${ext}',1 )`)
+      return result.affectedRows;
+
+    } catch (error) {
+      console.log(error);
+    }
+  },
+  deleteExt: async (idExt) => {
+    try {
+      const [result] = await dbMysql.execute(`DELETE FROM TBL_PHONE_EXT WHERE ID_EXT= ${idExt}`)
       return result.affectedRows;
 
     } catch (error) {

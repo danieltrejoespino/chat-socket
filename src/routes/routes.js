@@ -14,6 +14,7 @@ router.get('/', (req, res) => {
 });
 
 router.post('/login', checkReq.login, loginAct.validateLogin );
+router.put('/resetlogin', checkReq.login, loginAct.reset );
 
 
 
@@ -21,6 +22,7 @@ router.post('/login', checkReq.login, loginAct.validateLogin );
 router.post('/getMenu', checkReq.menu, generalAccions.getMenu );
 
 router.get('/getPhoneExtensions', generalAccions.getPhoneExt );
+router.delete('/deletePhoneExtensions', generalAccions.deletePhoneExt );
 router.post('/addPhoneExt', generalAccions.addPhoneExt );
 
 module.exports = router;

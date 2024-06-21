@@ -31,6 +31,22 @@ const loginAct = {
     } catch (error) {
       
     }
+  },
+  reset : async (req,res) => {
+    const {name,pass} = req.body
+
+    try {
+      const log= await myslqAccions.resetLogin(name,pass)    
+      console.log(log);
+      if(log == 1){
+        res.status(200).json({ rspta: 'success' })
+      }else {
+        res.status(404).json({ rspta: 'error' })
+      }
+
+    } catch (error) {
+      console.log(error);
+    }
   }
 
 }

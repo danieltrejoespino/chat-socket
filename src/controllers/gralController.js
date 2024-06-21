@@ -55,6 +55,19 @@ const generalAccions = {
     } catch (error) {
       console.log(error);
     }
+  },
+  deletePhoneExt : async (req,res) => {
+    const {idExt} = req.body
+    try {
+      const log= await myslqAccions.deleteExt(idExt)
+      if(log == 1){
+        res.status(200).json({ rspta: 'success' })
+      }else {
+        res.status(404).json({ rspta: 'error' })
+      }
+    } catch (error) {
+      console.log(error);
+    }
   }
 }
 
