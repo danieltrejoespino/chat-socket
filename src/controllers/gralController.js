@@ -19,6 +19,7 @@ const generalAccions = {
     const {id_user,id_perfil} = req.body
     try {
       const log= await myslqAccions.getMenu(id_user,id_perfil)
+      
       if(log.length > 0){
         res.status(200).json(log)
       }else {

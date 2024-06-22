@@ -67,10 +67,12 @@ const myslqAccions = {
         query = 'SELECT * FROM TBL_MENU where STATUS_MENU = 1 order by ID_MENU ASC '
         break;
       default:
-        query = ` SELECT M.* FROM TBL_MENU M 
-                  LEFT JOIN TBL_MENU_ACCESS MA ON M.ID_MENU = MA.ID_MENU 
-                  WHERE MA.ID_PERFIL IN (0, ${id_perfil} )  AND MA.STATUS_ACCESS = 1 AND M.STATUS_MENU = 1
-                  order by M.ID_MENU ASC `
+        query = ` 
+        SELECT M.*,TTM.NAME_TIPO FROM TBL_MENU M 
+        LEFT JOIN TBL_MENU_ACCESS MA ON M.ID_MENU = MA.ID_MENU
+        LEFT JOIN TBL_TIPO_MENU TTM ON M.ID_TIPO_MENU = TTM.ID_TIPO_MENU
+        WHERE MA.ID_PERFIL IN (0, ${id_perfil} )  AND MA.STATUS_ACCESS = 1 AND M.STATUS_MENU = 1 AND TTM.STATUS_TIPO = 1
+        order by M.ID_MENU ASC `
         break;
     }
     
