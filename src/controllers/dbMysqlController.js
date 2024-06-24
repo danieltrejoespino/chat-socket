@@ -61,13 +61,29 @@ const myslqAccions = {
     }
   },
   getMenu: async (id_user, id_perfil) => {
-    let query
+    let query;
+    console.log(id_perfil)
+    switch (id_perfil) {
+      case '1':
+        query = `SELECT M.*,TTM.NAME_TIPO FROM imp_internal.TBL_MENU M 
+        LEFT JOIN imp_internal.TBL_MENU_ACCESS MA ON M.ID_MENU = MA.ID_MENU
+        LEFT JOIN imp_internal.TBL_TIPO_MENU TTM ON M.ID_TIPO_MENU = TTM.ID_TIPO_MENU
+        WHERE MA.STATUS_ACCESS = 1 AND M.STATUS_MENU = 1 AND TTM.STATUS_TIPO = 1
+        order by M.ID_MENU ASC `;
+
+        break;
+
+      default:
         query = ` 
-        SELECT M.*,TTM.NAME_TIPO FROM TBL_MENU M 
-        LEFT JOIN TBL_MENU_ACCESS MA ON M.ID_MENU = MA.ID_MENU
-        LEFT JOIN TBL_TIPO_MENU TTM ON M.ID_TIPO_MENU = TTM.ID_TIPO_MENU
-        WHERE MA.ID_PERFIL = ${id_perfil} AND MA.STATUS_ACCESS = 1 AND M.STATUS_MENU = 1 AND TTM.STATUS_TIPO = 1
-        order by M.ID_MENU ASC `
+      SELECT M.*,TTM.NAME_TIPO FROM TBL_MENU M 
+      LEFT JOIN TBL_MENU_ACCESS MA ON M.ID_MENU = MA.ID_MENU
+      LEFT JOIN TBL_TIPO_MENU TTM ON M.ID_TIPO_MENU = TTM.ID_TIPO_MENU
+      WHERE MA.ID_PERFIL = ${id_perfil} AND MA.STATUS_ACCESS = 1 AND M.STATUS_MENU = 1 AND TTM.STATUS_TIPO = 1
+      order by M.ID_MENU ASC `;
+
+        break;
+    }
+
     try {
       const [rows] = await dbMysql.execute(query);
       return rows;
@@ -78,7 +94,7 @@ const myslqAccions = {
   getExt: async () => {
     try {
       const [rows] = await dbMysql.execute(
-        `SELECT * FROM TBL_PHONE_EXT WHERE STATUS_EXT=1 `
+        `SELECT ID_EXT,OWNER_EXT,AREA_EXT,NAME_EXT  FROM TBL_PHONE_EXT WHERE STATUS_EXT=1 `
       );
       return rows;
     } catch (error) {
