@@ -60,14 +60,24 @@ const myslqAccions = {
       console.log(error);
     }
   },
+  updateUser: async (ID_USER,NAME_USER,APODO,PAS_USER) => {
+    try {
+      const [result] = await dbMysql.execute(
+        `UPDATE TBL_USER SET NAME_USER='${NAME_USER}', PASS_USER='${PAS_USER}', APODO='${APODO}' WHERE ID_USER=${ID_USER};`
+      );
+      return result.affectedRows;
+    } catch (error) {
+      console.log(error);
+    }
+  },
   getMenu: async (id_user, id_perfil) => {
     let query;
     console.log(id_perfil)
     switch (id_perfil) {
       case '1':
-        query = `SELECT M.*,TTM.NAME_TIPO FROM imp_internal.TBL_MENU M 
-        LEFT JOIN imp_internal.TBL_MENU_ACCESS MA ON M.ID_MENU = MA.ID_MENU
-        LEFT JOIN imp_internal.TBL_TIPO_MENU TTM ON M.ID_TIPO_MENU = TTM.ID_TIPO_MENU
+        query = `SELECT M.*,TTM.NAME_TIPO FROM TBL_MENU M 
+        LEFT JOIN TBL_MENU_ACCESS MA ON M.ID_MENU = MA.ID_MENU
+        LEFT JOIN TBL_TIPO_MENU TTM ON M.ID_TIPO_MENU = TTM.ID_TIPO_MENU
         WHERE MA.STATUS_ACCESS = 1 AND M.STATUS_MENU = 1 AND TTM.STATUS_TIPO = 1
         order by M.ID_MENU ASC `;
 
@@ -94,7 +104,7 @@ const myslqAccions = {
   getExt: async () => {
     try {
       const [rows] = await dbMysql.execute(
-        `SELECT ID_EXT,OWNER_EXT,AREA_EXT,NAME_EXT  FROM TBL_PHONE_EXT WHERE STATUS_EXT=1 `
+        `SELECT *  FROM TBL_PHONE_EXT WHERE UPPER(ESTATUS) = 'ACTIVO' `
       );
       return rows;
     } catch (error) {

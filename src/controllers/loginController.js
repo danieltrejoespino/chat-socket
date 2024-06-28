@@ -48,6 +48,21 @@ const loginAct = {
     } catch (error) {
       console.log(error);
     }
+  },
+  updateUser : async (req,res) => {
+    const {ID_USER,NAME_USER,APODO,PAS_USER} = req.body    
+    try {
+      const log= await myslqAccions.updateUser(ID_USER,NAME_USER,APODO,PAS_USER)    
+      console.log(log);
+      if(log == 1){
+        res.status(200).json({ rspta: 'success' })
+      }else {
+        res.status(404).json({ rspta: 'error' })
+      }
+
+    } catch (error) {
+      console.log(error);
+    }
   }
 
 }

@@ -14,6 +14,7 @@ router.get('/', (req, res) => {
 });
 
 router.post('/login', checkReq.login, loginAct.validateLogin );
+router.put('/updateUser', loginAct.updateUser );
 router.put('/resetlogin', checkReq.login, loginAct.reset );
 
 
