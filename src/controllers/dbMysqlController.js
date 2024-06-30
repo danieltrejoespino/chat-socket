@@ -62,9 +62,27 @@ const myslqAccions = {
   },
   updateUser: async (ID_USER,NAME_USER,APODO,PAS_USER) => {
     try {
-      const [result] = await dbMysql.execute(
-        `UPDATE TBL_USER SET NAME_USER='${NAME_USER}', PASS_USER='${PAS_USER}', APODO='${APODO}' WHERE ID_USER=${ID_USER};`
-      );
+      let sql = "UPDATE TBL_USER SET ";
+      let params = [];
+      
+      if (NAME_USER) {
+        sql += "NAME_USER = ?, ";
+        params.push(NAME_USER);
+      }
+      if (PAS_USER) {
+        sql += "PASS_USER = ?, ";
+        params.push(PAS_USER);
+      }
+      if (APODO) {
+        sql += "APODO = ?, ";
+        params.push(APODO);
+      }  
+      sql = sql.slice(0, -2);
+  
+      sql += ` WHERE ID_USER = ?`;
+      params.push(ID_USER);
+  
+      const [result] = await dbMysql.execute(sql, params);
       return result.affectedRows;
     } catch (error) {
       console.log(error);
@@ -72,8 +90,7 @@ const myslqAccions = {
   },
   getMenu: async (id_user, id_perfil) => {
     let query;
-    console.log(id_perfil)
-    switch (id_perfil) {
+    switch (parseInt(id_perfil)) {
       case '1':
         query = `SELECT M.*,TTM.NAME_TIPO FROM TBL_MENU M 
         LEFT JOIN TBL_MENU_ACCESS MA ON M.ID_MENU = MA.ID_MENU
