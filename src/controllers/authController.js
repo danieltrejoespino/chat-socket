@@ -25,9 +25,23 @@ const login = (req, res, next) => {
   next();
 };
 
+const validateIP = (req, res, next) => {
+  const allowedIPs = ['::ffff:172.20.2.57'];
+  const clientIP = req.ip;
+
+  console.log('IP del cliente:', clientIP);
+
+  if (allowedIPs.includes(clientIP)) {
+    console.log('IP Permitida');
+    next();
+  } else {
+    console.log('IP No permitida');
+    res.status(403).send('Acceso denegado: IP no permitida');
+  }
+};
 
 
 const checkReq ={
-  login,menu
+  login,menu,validateIP
 }
 module.exports = checkReq;

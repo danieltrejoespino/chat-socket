@@ -90,8 +90,9 @@ const myslqAccions = {
   },
   getMenu: async (id_user, id_perfil) => {
     let query;
+    
     switch (parseInt(id_perfil)) {
-      case '1':
+      case 1:
         query = `SELECT M.*,TTM.NAME_TIPO FROM TBL_MENU M 
         LEFT JOIN TBL_MENU_ACCESS MA ON M.ID_MENU = MA.ID_MENU
         LEFT JOIN TBL_TIPO_MENU TTM ON M.ID_TIPO_MENU = TTM.ID_TIPO_MENU
